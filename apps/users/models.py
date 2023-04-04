@@ -2,6 +2,7 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 
+# TODO: group - zamienić na wybór z trzech opcji: user, worker, admin
 class User(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=50)
