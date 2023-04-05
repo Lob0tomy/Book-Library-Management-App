@@ -23,7 +23,7 @@ class Book(models.Model):
     updated = models.DateTimeField(blank=True)
     borrowed = models.DateTimeField(null=True, blank=True)
     pages = models.IntegerField(null=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='users')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return "%s - %s" % (self.author, self.title)
