@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'apps.books',
     'apps.users',
     'phonenumber_field',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
 ]
 
 MIDDLEWARE = [
