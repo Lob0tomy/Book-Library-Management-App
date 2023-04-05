@@ -1,8 +1,7 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from rest_framework import generics, filters
+from django_filters.rest_framework import DjangoFilterBackend
+from apps.users.models import User
+from apps.users.serializers import UserSerializer
 
-# TODO: Serializacja danych, hashowanie haseł
 
 
-def users(request):
-    return HttpResponse("Tu będą użytkownicy")
