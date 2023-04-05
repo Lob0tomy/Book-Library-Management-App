@@ -15,15 +15,15 @@ GENRE_CHOICES = sorted([("SF", "Sci-Fi"),
 class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
-    publisher = models.CharField(max_length=100)
+    publisher = models.CharField(max_length=100, blank=True)
     genre = models.CharField(choices=GENRE_CHOICES, max_length=100)
-    description = models.TextField(null=True)
-    pub_date = models.DateField(null=True)
-    created = models.DateField(editable=False)
-    updated = models.DateField()
-    borrowed = models.DateField(null=True)
+    description = models.TextField(null=True, blank=True)
+    pub_date = models.DateField()
+    created = models.DateTimeField(editable=False)
+    updated = models.DateTimeField(blank=True)
+    borrowed = models.DateTimeField(null=True, blank=True)
     pages = models.IntegerField(null=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='users')
 
     def __str__(self):
         return "%s - %s" % (self.author, self.title)

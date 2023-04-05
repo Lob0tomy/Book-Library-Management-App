@@ -14,12 +14,12 @@ class User(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_user = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
-    created = models.DateField(editable=False)
+    created = models.DateTimeField(editable=False)
     borrowed_books = models.IntegerField(default=0)
     photo = models.ImageField(upload_to='image', blank=True, null=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     objects = AccountManager()
 
@@ -30,7 +30,7 @@ class User(AbstractBaseUser):
         return True
 
     def __str__(self):
-        return "%s: %s %s" % (self.email, self.first_name, self.last_name)
+        return "%s %s" % (self.first_name, self.last_name)
 
     def save(self, *args, **kwargs):
         if not self.id:
