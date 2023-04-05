@@ -1,5 +1,6 @@
 from django.db import models
 from apps.users.models import User
+from django.utils import timezone
 
 GENRE_CHOICES = sorted([("SF", "Sci-Fi"),
                         ("FA", "Fantastyka"),
@@ -18,6 +19,9 @@ class Book(models.Model):
     genre = models.CharField(choices=GENRE_CHOICES, max_length=100)
     description = models.TextField(null=True)
     pub_date = models.DateField(null=True)
+    created = models.DateField(editable=False)
+    updated = models.DateField()
+    borrowed = models.DateField(null=True)
     pages = models.IntegerField(null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
@@ -26,3 +30,10 @@ class Book(models.Model):
 
     class Meta:
         ordering = ["author"]
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        self.updated = timezone.now()
+        return super(Book, self).save(*args, **kwargs)
+

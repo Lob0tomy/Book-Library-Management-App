@@ -3,17 +3,11 @@ from .models import Book, GENRE_CHOICES
 
 
 class BookSerializer(serializers.ModelSerializer):
-    # id = serializers.IntegerField(read_only=True)
-    # title = serializers.CharField(required=True)
-    # author = serializers.CharField(required=True)
-    # publisher = serializers.CharField(required=False, allow_blank=True)
-    # genre = serializers.ChoiceField(choices=GENRE_CHOICES, required=True)
-    # pub_date = serializers.DateField(required=True)
-    # user = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Book
-        fields = ['id', 'title', 'author', 'publisher', 'genre', 'description', 'pub_date', 'pages', 'user']
+        fields = ['id', 'title', 'author', 'publisher', 'genre', 'description', 'pub_date',
+                  'created', 'updated', 'borrowed', 'pages', 'user']
 
     def create(self, validated_data):
         """
