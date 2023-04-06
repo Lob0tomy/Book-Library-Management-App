@@ -28,18 +28,24 @@ from .permissions import BookViewPermission
 
 
 
-class BookList(generics.ListCreateAPIView):
+class BookList(generics.ListAPIView):
     """
-    List all books or create a new book.
+    List all books stored in the library
     """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [BookViewPermission]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['genre', 'author', 'publisher']
     search_fields = ['title', 'author', 'publisher']
     ordering_fields = ['pub_date', 'created', 'title', 'author']
 
+class BookAdd(generics.CreateAPIView):
+    """
+    Add a new book to the library
+    """
+    permission_classes = [BookViewPermission]
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
 
 class BookDetail(generics.RetrieveUpdateDestroyAPIView):
     """
