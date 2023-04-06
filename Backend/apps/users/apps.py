@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from library_management.settings import AUTH_USER_MODEL
 
 
 class UsersConfig(AppConfig):
