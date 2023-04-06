@@ -12,7 +12,7 @@ class User(AbstractBaseUser):
     phone_no = PhoneNumberField(region='PL', max_length=15)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    is_user = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     created = models.DateTimeField(editable=False)
     borrowed_books = models.IntegerField(default=0)
