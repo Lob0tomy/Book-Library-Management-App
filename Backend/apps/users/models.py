@@ -26,6 +26,12 @@ class User(AbstractBaseUser):
     def __str__(self):
         return "%s %s" % (self.first_name, self.last_name)
 
+    def has_perm(self, perm, obj=None):
+        return self.is_admin
+
+    def has_module_perms(self, app_label):
+        return True
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.created = timezone.now()
