@@ -1,5 +1,5 @@
 from django.db import models
-from apps.users.models import User
+from library_management.settings import AUTH_USER_MODEL
 from django.utils import timezone
 
 GENRE_CHOICES = sorted([("SF", "Sci-Fi"),
@@ -23,7 +23,7 @@ class Book(models.Model):
     updated = models.DateTimeField(blank=True)
     borrowed = models.DateTimeField(null=True, blank=True)
     pages = models.IntegerField(null=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return "%s - %s" % (self.author, self.title)
@@ -36,4 +36,3 @@ class Book(models.Model):
             self.created = timezone.now()
         self.updated = timezone.now()
         return super(Book, self).save(*args, **kwargs)
-
