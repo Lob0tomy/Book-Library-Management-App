@@ -17,34 +17,42 @@ class UserObtainTokenPairSerializer(TokenObtainPairSerializer):
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=User.objects.all())])
+    email = serializers.EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())],
+        style={'placeholder':'example@gmail.com'},
+        label='E-mail*'
+    )
+
     password = serializers.CharField(
         write_only=True,
         required=True,
         validators=[validate_password],
         style={'input_type':'password', 'placeholder':'Password'},
-        label='Password'
+        label='Hasło*'
     )
+
     password2 = serializers.CharField(
         write_only=True,
         required=True,
         style={'input_type':'password','placeholder':'Repeat Password'},
-        label='Repeat Password'
+        label='Powtórz hasło*'
     )
+
     phone_no = PhoneNumberField(
         required=True,
         validators=[validate_international_phonenumber],
-        label='Phone Number',
+        label='Numer telefonu*',
         region='PL'
     )
 
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'password2', 'first_name', 'last_name', 'phone_no', 'photo']
+        fields = ['email', 'password', 'password2', 'first_name', 'last_name', 'phone_no']
         extra_kwargs = {
-            'first_name':{'required':True},
-            'last_name':{'required':True},
+            'first_name':{'required':True,'label':'Imię*'},
+            'last_name':{'required':True, 'label':'Nazwisko*'},
         }
 
     def validate(self, attrs):
@@ -58,7 +66,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
             phone_no=validated_data['phone_no'],
-            photo=validated_data['photo'],
             password=validated_data['password']
         )
         return user
