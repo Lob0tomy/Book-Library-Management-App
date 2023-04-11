@@ -5,6 +5,7 @@ from apps.users.models import User
 from django.contrib.auth.password_validation import validate_password
 from phonenumber_field.validators import validate_international_phonenumber
 from phonenumber_field.serializerfields import PhoneNumberField
+from django.contrib.auth import login
 
 
 class UserObtainTokenPairSerializer(TokenObtainPairSerializer):
@@ -16,44 +17,48 @@ class UserObtainTokenPairSerializer(TokenObtainPairSerializer):
         return token
 
 
+
 class UserRegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
         validators=[UniqueValidator(queryset=User.objects.all())],
-        style={'placeholder':'example@gmail.com'},
-        label='E-mail*'
+        style={'input_type':'email', 'placeholder':'E-mail*', 'hide_label':'True'}
     )
 
     password = serializers.CharField(
         write_only=True,
         required=True,
         validators=[validate_password],
-        style={'input_type':'password', 'placeholder':'Password'},
-        label='Hasło*'
+        style={'input_type':'password', 'placeholder':'Hasło*', 'hide_label':'True'},
     )
 
     password2 = serializers.CharField(
         write_only=True,
         required=True,
-        style={'input_type':'password','placeholder':'Repeat Password'},
-        label='Powtórz hasło*'
+        style={'input_type':'password','placeholder':'Powtórz hasło*', 'hide_label':'True'},
     )
 
     phone_no = PhoneNumberField(
         required=True,
         validators=[validate_international_phonenumber],
-        label='Numer telefonu*',
+        style={'input_type':'number', 'placeholder':'Numer telefonu*', 'hide_label':'True'},
         region='PL'
+    )
+
+    first_name = serializers.CharField(
+        required=True,
+        style={'placeholder':'Imię*', 'hide_label':'True'}
+    )
+
+    last_name = serializers.CharField(
+        required=True,
+        style={'placeholder':'Nazwisko*', 'hide_label':'True'}
     )
 
 
     class Meta:
         model = User
         fields = ['email', 'password', 'password2', 'first_name', 'last_name', 'phone_no']
-        extra_kwargs = {
-            'first_name':{'required':True,'label':'Imię*'},
-            'last_name':{'required':True, 'label':'Nazwisko*'},
-        }
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
