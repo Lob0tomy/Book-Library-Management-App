@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'apps.user_authorization',
+    'rest_framework_simplejwt.token_blacklist'
 ]
 
 MIDDLEWARE = [

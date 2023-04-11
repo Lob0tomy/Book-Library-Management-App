@@ -8,16 +8,6 @@ from phonenumber_field.serializerfields import PhoneNumberField
 from django.contrib.auth import login
 
 
-class UserObtainTokenPairSerializer(TokenObtainPairSerializer):
-
-    @classmethod
-    def get_token(cls, user):
-        token = super(TokenObtainPairSerializer, cls).get_token(user)
-        token['email'] = user.email
-        return token
-
-
-
 class UserRegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
